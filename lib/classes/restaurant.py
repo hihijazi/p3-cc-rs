@@ -8,13 +8,16 @@ class Restaurant:
         self._name = name
         self._reviews = []
 
-    def get_name(self):
+    @property
+    def name(self):
         return self._name
     
-    def set_name(self, name):
-        name
-
-    name = property(get_name, set_name)
+    @name.setter
+    def name(self, name):
+        if not hasattr(self, "_name"):
+            self._name = name
+        else:
+            raise Exception("Cannot change name")
 
     def add_review(self, review):
         self._reviews.append(review)
