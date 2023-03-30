@@ -21,6 +21,12 @@ class TestReviews:
             review_1.rating = "6"
         with pytest.raises(Exception):
             review_1.rating = -3
+        with pytest.raises(Exception):
+            Review(False, 34, 1)
+        with pytest.raises(Exception):
+            Review(customer, restaurant, 6)
+        review_1.rating = 3
+        assert(review_1.rating == 3)
 
     def test_has_a_customer(self):
         '''review has a customer .'''

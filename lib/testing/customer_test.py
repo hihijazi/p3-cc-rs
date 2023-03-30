@@ -6,18 +6,24 @@ class TestCustomer:
     '''Customer in customer.py'''
 
     def test_has_name(self):
-        '''has the first name and last name passed into __init__'''
-        customer = Customer('Steve', 'Wayne')
-        assert(customer.first_name == "Steve")
+        '''sets first and last name properties on init, validates, and returns full name.'''
+        with pytest.raises(Exception):
+            Customer("", 43)
+        customer = Customer('Bruce', 'Wayne')
+        assert(customer.first_name == "Bruce")
         assert(customer.last_name == "Wayne")
-        assert(customer.get_full_name() == 'Steve Wayne')
+        assert(customer.full_name == 'Bruce Wayne')
         with pytest.raises(Exception):
             customer.first_name = True
         with pytest.raises(Exception):
             customer.first_name = "a"*26
         with pytest.raises(Exception):
             customer.first_name = ""
-
+        customer.first_name = "Bat"
+        customer.last_name = "Man"
+        assert(customer.first_name == "Bat")
+        assert(customer.last_name == "Man")
+        assert(customer.full_name == "Bat Man")
 
     def test_has_many_reviews(self):
         '''customer has many reviews'''
@@ -43,7 +49,6 @@ class TestCustomer:
         assert(restaurant in customer.restaurants)
         assert(restaurant_2 in customer.restaurants)
 
-
     def test_get_number_of_reviews(self):
         '''test get_number_of_reviews()'''
         restaurant = Restaurant("Mels")
@@ -53,15 +58,15 @@ class TestCustomer:
 
         assert(  customer.get_num_reviews() == 2)
 
-    def test_add_review(self):
-        '''test add_review()'''
+    def test_create_review(self):
+        '''test create_review()'''
         restaurant = Restaurant("Mels")
         customer = Customer('Steve', 'Wayne')
         review_1 = Review(customer, restaurant, 2)
         review_2 = Review(customer, restaurant, 5)
         
         assert(customer.get_num_reviews() == 2)
-        customer.add_review(restaurant, 1)
+        customer.create_review(restaurant, 1)
         assert(len(customer.reviews) == 3)
         assert(customer.reviews[2].rating == 1)
         assert(customer.reviews[2].restaurant == restaurant)
