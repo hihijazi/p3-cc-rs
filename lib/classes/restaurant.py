@@ -7,7 +7,7 @@ class Restaurant:
             raise TypeError("Name must be a string.")
         self._name = name
         self._reviews = []
-        self.__class__.all.append(self)
+        self.all.append(self)
 
     @property
     def name(self):
